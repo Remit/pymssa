@@ -4,7 +4,7 @@ from numba import jit
 from .ops import *
 
 
-@jit(nopython=True, fastmath=True)
+#@jit(nopython=True, fastmath=True)
 def structured_varimax(U, n_timeseries, window, gamma=1, tol=1e-8, max_iter=5000):
     # See:
     # http://200.145.112.249/webcast/files/SeminarMAR2017-ICTP-SAIFR.pdf
@@ -56,7 +56,7 @@ def structured_varimax(U, n_timeseries, window, gamma=1, tol=1e-8, max_iter=5000
 
 
 
-@jit(nopython=True, fastmath=True)
+#@jit(nopython=True, fastmath=True)
 def calculate_factor_vectors(trajectory_matrix,
                              left_singular_vectors,
                              singular_values,
@@ -70,7 +70,7 @@ def calculate_factor_vectors(trajectory_matrix,
     return factor_vectors
 
 
-@jit(nopython=True, fastmath=True)
+#@jit(nopython=True, fastmath=True)
 def elementary_matrix_at_rank(trajectory_matrix,
                               left_singular_vectors,
                               rank):
@@ -80,7 +80,7 @@ def elementary_matrix_at_rank(trajectory_matrix,
     return X_r
 
 
-@jit(nopython=True, fastmath=True)
+#@jit(nopython=True, fastmath=True)
 def construct_elementary_matrix(trajectory_matrix,
                                 left_singular_vectors,
                                 singular_values,
@@ -102,25 +102,25 @@ def construct_elementary_matrix(trajectory_matrix,
     return elementary_matrix
 
 
-@jit(nopython=True, fastmath=True)
+#@jit(nopython=True, fastmath=True)
 def vtmat_ts_startidx(timeseries_index, L):
     return L * timeseries_index
 
 
 
-@jit(nopython=True, fastmath=True)
+#@jit(nopython=True, fastmath=True)
 def vtmat_ts_endidx(timeseries_index, L):
     return L * (timeseries_index + 1)
 
 
-@jit(nopython=True, fastmath=True)
+#@jit(nopython=True, fastmath=True)
 def elementary_matrix_for_timeseries_index(elementary_matrix, ts_idx, L):
     sidx = vtmat_ts_startidx(ts_idx, L)
     eidx = vtmat_ts_endidx(ts_idx, L)
     return elementary_matrix[sidx:eidx]
 
 
-@jit(nopython=True, fastmath=True)
+#@jit(nopython=True, fastmath=True)
 def reshape_elementary_matrix_by_timeseries_index(elementary_matrix, P, L):
     _, K, rank = elementary_matrix.shape
     elementary_matrices = np.zeros((P, L, K, rank))
@@ -135,7 +135,7 @@ def reshape_elementary_matrix_by_timeseries_index(elementary_matrix, P, L):
     return elementary_matrices
 
 
-@jit(nopython=True, fastmath=True)
+#@jit(nopython=True, fastmath=True)
 def diagonal_averager(elementary_matrix, allocated_output):
     # Reconstruct a timeseries from a trajectory matrix using diagonal
     # averaging procedure.
@@ -148,7 +148,7 @@ def diagonal_averager(elementary_matrix, allocated_output):
 
 
 
-@jit(nopython=True, fastmath=True)
+#@jit(nopython=True, fastmath=True)
 def batch_diagonal_averager(elementary_matrix, component_matrix_ref):
     em_rev = elementary_matrix[:, ::-1, :]
     lidx, ridx = -em_rev.shape[1]+1, em_rev.shape[2]
@@ -159,7 +159,7 @@ def batch_diagonal_averager(elementary_matrix, component_matrix_ref):
 
 
 
-@jit(nopython=True, fastmath=True)
+#@jit(nopython=True, fastmath=True)
 def diagonal_average_each_component(elementary_matrix,
                                     components,
                                     N):
@@ -175,7 +175,7 @@ def diagonal_average_each_component(elementary_matrix,
 
 
 
-@jit(nopython=True, fastmath=True)
+#@jit(nopython=True, fastmath=True)
 def diagonal_average_at_components(elementary_matrix,
                                    components,
                                    N):
@@ -191,7 +191,7 @@ def diagonal_average_at_components(elementary_matrix,
 
 
 
-@jit(nopython=True, fastmath=True)
+#@jit(nopython=True, fastmath=True)
 def _incremental_component_reconstruction_inner(trajectory_matrix,
                                                 components,
                                                 left_singular_vectors,
@@ -214,7 +214,7 @@ def _incremental_component_reconstruction_inner(trajectory_matrix,
 
 
 
-#@jit(nopython=True, fastmath=True)
+##@jit(nopython=True, fastmath=True)
 def incremental_component_reconstruction(trajectory_matrix,
                                       left_singular_vectors,
                                       singular_values,
@@ -237,7 +237,7 @@ def incremental_component_reconstruction(trajectory_matrix,
 
 
 
-@jit(nopython=True, fastmath=True)
+#@jit(nopython=True, fastmath=True)
 def construct_hankel_weights(L, K, N):
     L_star = np.minimum(L, K)
     K_star = np.maximum(L, K)
@@ -255,7 +255,7 @@ def construct_hankel_weights(L, K, N):
     return weights
 
 
-@jit(nopython=True, fastmath=True)
+#@jit(nopython=True, fastmath=True)
 def hankel_weighted_correlation(ts_components,
                                 weights):
 
@@ -282,7 +282,7 @@ def hankel_weighted_correlation(ts_components,
 
 
 
-@jit(nopython=True, fastmath=True)
+#@jit(nopython=True, fastmath=True)
 def optimal_component_ordering(timeseries,
                                components):
 
@@ -306,7 +306,7 @@ def optimal_component_ordering(timeseries,
 
 
 
-@jit(nopython=True, fastmath=True)
+#@jit(nopython=True, fastmath=True)
 def construct_forecasting_matrix(n_timeseries,
                                  W_matrix,
                                  U_matrix):
@@ -320,7 +320,7 @@ def construct_forecasting_matrix(n_timeseries,
 
 
 
-@jit(nopython=True, fastmath=True)
+#@jit(nopython=True, fastmath=True)
 def forecasting_matrix_for_components(left_singular_vectors,
                                       components,
                                       P,
@@ -350,7 +350,7 @@ def forecasting_matrix_for_components(left_singular_vectors,
 
 
 
-@jit(nopython=True, fastmath=True)
+#@jit(nopython=True, fastmath=True)
 def vmssa_recurrent_forecast(timepoints_out,
                              components,
                              left_singular_vectors,
