@@ -7,7 +7,7 @@ from scipy.spatial.distance import cdist, pdist, squareform
 from scipy.linalg import hankel
 
 from functools import partial, lru_cache, reduce
-from tqdm.autonotebook import tqdm
+from tqdm.auto import tqdm
 
 from .optimized import *
 from .ops import *
