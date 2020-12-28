@@ -214,7 +214,7 @@ def _incremental_component_reconstruction_inner(trajectory_matrix,
 
 
 
-@jit(nopython=True, fastmath=True)
+#@jit(nopython=True, fastmath=True)
 def incremental_component_reconstruction(trajectory_matrix,
                                       left_singular_vectors,
                                       singular_values,
